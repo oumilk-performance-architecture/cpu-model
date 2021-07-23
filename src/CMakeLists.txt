@@ -1,9 +1,13 @@
 cmake_minimum_required(VERSION 3.2)
-project(divider)
+project(arm_cpu)
 
 add_subdirectory(division)
+add_subdirectory(core)
 set(SOURCE_FILES main.cpp)
 
-add_executable(divider ${SOURCE_FILES})
-target_link_libraries(divider division)
-install(TARGETS divider DESTINATION ${DIVISIBLE_INSTALL_BIN_DIR})
+add_executable(arm_cpu ${SOURCE_FILES})
+target_link_libraries(arm_cpu division)
+target_link_libraries(arm_cpu core)
+
+include_directories(core)
+install(TARGETS arm_cpu DESTINATION ${DIVISIBLE_INSTALL_BIN_DIR})

@@ -1,6 +1,44 @@
 [![Build Status](https://travis-ci.org/kigster/cmake-project-template.svg?branch=master)](https://travis-ci.org/kigster/cmake-project-template)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fkigster%2Fcmake-project-template.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fkigster%2Fcmake-project-template?ref=badge_shield)
 
+# ARM CPU Performance Model
+
+### Prerequisites
+ * C++ compiler
+ * CMake
+
+### Build the Project
+
+```bash
+❯ rm -rf build && mkdir build
+❯ git submodule init && git submodule update
+❯ cd build
+❯ cmake ..
+❯ make && make install
+❯ cd ..
+```
+
+### Project Structure
+
+### License
+
+&copy; 2021 - Jonathan Ou.
+
+Open sourced under MIT license, the terms of which can be read here — [MIT License](http://opensource.org/licenses/MIT).
+
+### Acknowledgments
+ * [CMake C++ Project Template](https://github.com/kigster/cmake-project-template) - Initial project started from template
+
+
+
+
+
+
+
+
+
+
+##############################################################
 # CMake C++ Project Template
 
 ### Division with a remainder library
@@ -22,15 +60,6 @@ Divider is a minimal project that's kept deliberately very small. When you build
 
 ## Usage
 
-### Prerequisites
-
-You will need:
-
- * A modern C/C++ compiler
- * CMake 3.1+ installed (on a Mac, run `brew install cmake`)
- * If you prefer to code in a great IDE, I highly recommend [Jetbrains CLion](https://www.jetbrains.com/clion/). It is fully compatible with this project.
-
-### Building The Project
 
 #### Git Clone
 
@@ -58,16 +87,6 @@ The rest should be obvious: `src` is the sources, and `test` is where we put our
 
 Now we can build this project, and below we show three separate ways to do so.
 
-#### Building Manually
-
-```bash
-❯ rm -rf build && mkdir build
-❯ git submodule init && git submodule update
-❯ cd build
-❯ cmake ..
-❯ make && make install
-❯ cd ..
-```
 
 
 #### Running the tests
@@ -122,25 +141,6 @@ Division : 112443477 / 12309324 = 9
 Remainder: 112443477 % 12309324 = 1659561
 ```
 
-### Building in CLion
-
-> **NOTE**: Since JetBrains software [does not officially support git submodules](https://youtrack.jetbrains.com/issue/IDEA-64024), you must run `git submodule init && git submodule update` before starting CLion on a freshly checked-out repo.
-
-> **NOTE**: We recommend that you copy file `.idea/workspace.xml.example` into `.idea/workspace.xml` **before starting CLion**. It will provide a good starting point for your project's workspace.
-
-Assuming you've done the above two steps, you can start CLion, and open the project's top level folder. CLion should automatically detect the top level `CMakeLists.txt` file and provide you with the full set of build targets.
-
-Select menu option **Build   ➜ Build Project**, and then **Build ➜ Install**.
-
-![CLION](doc/cmake-clion.png)
-
-The above screenshot is an example of CLion with this project open.
-
-### Using it as a C++ Library
-
-We build a static library that, given a simple fraction will return the integer result of the division, and the remainder.
-
-We can use it from C++ like so:
 
 ```cpp
 #include <iostream>
@@ -175,11 +175,6 @@ Tests:
  * [Submit Issues](https://github.com/kigster/cmake-project-template/issues)
  * [Pull Requests](https://github.com/kigster/cmake-project-template/pulls)
 
-### License
-
-&copy; 2017-2019 Konstantin Gredeskoul.
-
-Open sourced under MIT license, the terms of which can be read here — [MIT License](http://opensource.org/licenses/MIT).
 
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fkigster%2Fcmake-project-template.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fkigster%2Fcmake-project-template?ref=badge_large)

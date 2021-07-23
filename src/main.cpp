@@ -1,5 +1,7 @@
 #include <division.h>
+#include <ProjectConfig.h>
 #include <iostream>
+#include <core.h>
 
 using namespace std;
 
@@ -8,6 +10,7 @@ static const char *const USAGE = "Usage:\n\tdivider <numerator> <denominator>\n\
 
 int main(int argc, const char *argv[]) {
   Fraction f;
+  Core co(10);
 
   cout << HEADER;
 
@@ -23,9 +26,11 @@ int main(int argc, const char *argv[]) {
   Division d = Division(f);
   try {
     DivisionResult r = d.divide();
-
+    cout << "Hello\n";
     cout << "Division : " << f.numerator << " / " << f.denominator << " = " << r.division << "\n";
     cout << "Remainder: " << f.numerator << " % " << f.denominator << " = " << r.remainder << "\n";
+    cout << "Version " << arm_cpu_VERSION_MAJOR << "." << arm_cpu_VERSION_MINOR << "\n\n";
+    cout << "Core Value: " << co.call_me() << "\n";
   } catch (DivisionByZero) {
     cout << "Can not divide by zero, Homer. Sober up!\n";
   }

@@ -1,9 +1,10 @@
 cmake_minimum_required(VERSION 3.2)
 
-project(cmake-project-template)
+project(arm_cpu VERSION 0.1)
+configure_file(ProjectConfig.h.in ProjectConfig.h)
 
 set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O3")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -O3")
 
 set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR})
 
@@ -19,4 +20,4 @@ include_directories(${DIVISION_HEADERS_DIR})
 add_subdirectory(src)
 add_subdirectory(test)
 
-
+target_include_directories(arm_cpu PUBLIC "${PROJECT_BINARY_DIR}")
