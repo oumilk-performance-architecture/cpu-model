@@ -10,7 +10,7 @@ static const char *const USAGE = "Usage:\n\tdivider <numerator> <denominator>\n\
 
 int main(int argc, const char *argv[]) {
   Fraction f;
-  Core co(10);
+  Core *co = new Core(10);
 
   cout << HEADER;
 
@@ -30,7 +30,8 @@ int main(int argc, const char *argv[]) {
     cout << "Division : " << f.numerator << " / " << f.denominator << " = " << r.division << "\n";
     cout << "Remainder: " << f.numerator << " % " << f.denominator << " = " << r.remainder << "\n";
     cout << "Version " << arm_cpu_VERSION_MAJOR << "." << arm_cpu_VERSION_MINOR << "\n\n";
-    cout << "Core Value: " << co.call_me() << "\n";
+    cout << "Core Value: " << co->call_me() << "\n";
+    cout << "Core Value: " << co->call_fetch() << "\n";
   } catch (DivisionByZero) {
     cout << "Can not divide by zero, Homer. Sober up!\n";
   }
