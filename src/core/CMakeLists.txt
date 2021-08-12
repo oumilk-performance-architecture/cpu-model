@@ -1,12 +1,19 @@
-cmake_minimum_required(VERSION 3.2)
 project(core C CXX)
 
 set(SOURCE_FILES core.h core.cpp)
-add_library(core SHARED STATIC ${SOURCE_FILES})
-install(TARGETS core DESTINATION ${DIVISIBLE_INSTALL_LIB_DIR})
-install(FILES core.h DESTINATION ${DIVISIBLE_INSTALL_INCLUDE_DIR})
+add_library(${PROJECT_NAME} SHARED STATIC ${SOURCE_FILES})
 
 add_subdirectory(fetch)
-include_directories(fetch)
-target_link_libraries(core fetch)
+target_link_libraries(${PROJECT_NAME} fetch)
+target_include_directories(${PROJECT_NAME} PRIVATE fetch)
 
+target_link_libraries(${PROJECT_NAME} uinstr)
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/src/utils/uinstr)
+
+target_link_libraries(${PROJECT_NAME} isa)
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/src/utils/isa)
+
+target_link_libraries(${PROJECT_NAME} uop)
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/src/utils/uop)
+#install(TARGETS core DESTINATION ${CPU_INSTALL_LIB_DIR})
+#install(FILES core.h DESTINATION ${CPU_INSTALL_INCLUDE_DIR})

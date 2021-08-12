@@ -1,7 +1,6 @@
-[![Build Status](https://travis-ci.org/kigster/cmake-project-template.svg?branch=master)](https://travis-ci.org/kigster/cmake-project-template)
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fkigster%2Fcmake-project-template.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fkigster%2Fcmake-project-template?ref=badge_shield)
+# ARM CPU Model
 
-# ARM CPU Performance Model
+### Cycle accurate performance model 
 
 ### Prerequisites
  * C++ compiler
@@ -28,6 +27,7 @@ Open sourced under MIT license, the terms of which can be read here — [MIT Lic
 
 ### Acknowledgments
  * [CMake C++ Project Template](https://github.com/kigster/cmake-project-template) - Initial project started from template
+ * [USIM](https://github.com/bravegnu/usim) - Cortex-M0 simulator written in C++
 
 
 

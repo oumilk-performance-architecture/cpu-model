@@ -1,18 +1,19 @@
 #ifndef CORE_H
 #define CORE_H
 
-#include <fetch.h>
+#include "fetch/fetch.h"
+#include <armv6m.h>
 
 class Core {
     public:
-        Core(int number);
+        Core();
         ~Core();
-        unsigned int call_fetch();
-        int call_me();
+        void Clock();
         
     private:
         int k;
         Fetch *fetch;
+        Armv6m *isa;
 };
 
 #endif // CORE_H
