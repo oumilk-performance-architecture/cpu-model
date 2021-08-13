@@ -16,9 +16,9 @@ enum class Apsr{
 class UInstr {
     public:
         UInstr();
-        ~UInstr();
+        //~UInstr();
         void SetExecUnit(uint8_t unit);
-        //void SetUop();
+        
         void SetFlagN(bool value);
         void SetFlagZ(bool value);
         void SetFlagC(bool value);
@@ -33,7 +33,6 @@ class UInstr {
         uint8_t GetRn();
         uint8_t GetRm();
         uint8_t GetRa();
-
 
         void PrintDetails();
 

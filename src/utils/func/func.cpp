@@ -12,7 +12,7 @@ Func::~Func() {
 
 UInstr Func::ExecuteUop(UInstr uop) {
     //switch (uop.get)
-    Uop temp = Uop::LSLI;
+    Uop temp = Uop::LSL_imm;
     return uop;
 };
 

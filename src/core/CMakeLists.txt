@@ -15,5 +15,8 @@ target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/src/utils/
 
 target_link_libraries(${PROJECT_NAME} uop)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/src/utils/uop)
+
+target_link_libraries(${PROJECT_NAME} parameter)
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/src/utils/parameter)
 #install(TARGETS core DESTINATION ${CPU_INSTALL_LIB_DIR})
 #install(FILES core.h DESTINATION ${CPU_INSTALL_INCLUDE_DIR})

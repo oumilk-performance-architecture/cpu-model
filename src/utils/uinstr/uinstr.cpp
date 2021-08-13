@@ -4,9 +4,8 @@
 UInstr::UInstr() {
 };
 
-UInstr::~UInstr() {
-
-};
+//UInstr::~UInstr() {
+//};
 
 void UInstr::SetExecUnit(uint8_t unit) {
 

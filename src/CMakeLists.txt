@@ -20,6 +20,10 @@ add_subdirectory(utils/isa)
 target_link_libraries(${PROJECT_NAME} isa)
 target_include_directories(${PROJECT_NAME} PRIVATE utils/isa)
 
+add_subdirectory(utils/parameter)
+target_link_libraries(${PROJECT_NAME} parameter)
+target_include_directories(${PROJECT_NAME} PRIVATE utils/parameter)
+
 add_subdirectory(bus)
 target_link_libraries(${PROJECT_NAME} bus)
 target_include_directories(${PROJECT_NAME} PRIVATE bus)
