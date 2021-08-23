@@ -8,21 +8,29 @@ add_subdirectory(utils/uop)
 target_link_libraries(${PROJECT_NAME} uop)
 target_include_directories(${PROJECT_NAME} PRIVATE utils/uop)
 
+add_subdirectory(utils/idata)
+target_link_libraries(${PROJECT_NAME} idata)
+target_include_directories(${PROJECT_NAME} PRIVATE utils/idata)
+
 add_subdirectory(utils/uinstr)
 target_link_libraries(${PROJECT_NAME} uinstr)
 target_include_directories(${PROJECT_NAME} PRIVATE utils/uinstr)
 
-add_subdirectory(utils/func)
+add_subdirectory(instruction/func)
 target_link_libraries(${PROJECT_NAME} func)
-target_include_directories(${PROJECT_NAME} PRIVATE utils/func)
+target_include_directories(${PROJECT_NAME} PRIVATE instruction/func)
 
-add_subdirectory(utils/isa)
+add_subdirectory(instruction/isa)
 target_link_libraries(${PROJECT_NAME} isa)
-target_include_directories(${PROJECT_NAME} PRIVATE utils/isa)
+target_include_directories(${PROJECT_NAME} PRIVATE instruction/isa)
 
 add_subdirectory(utils/parameter)
 target_link_libraries(${PROJECT_NAME} parameter)
 target_include_directories(${PROJECT_NAME} PRIVATE utils/parameter)
+
+add_subdirectory(utils/delay)
+target_link_libraries(${PROJECT_NAME} delay)
+target_include_directories(${PROJECT_NAME} PRIVATE utils/delay)
 
 add_subdirectory(bus)
 target_link_libraries(${PROJECT_NAME} bus)

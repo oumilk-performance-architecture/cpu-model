@@ -3,6 +3,8 @@
 
 #include "fetch/fetch.h"
 #include <armv6m.h>
+#include <state.h>
+#include <func.h> // REMOVE
 
 class Core {
     public:
@@ -14,6 +16,8 @@ class Core {
         int k;
         Fetch *fetch;
         Armv6m *isa;
+        State state;
+        Func *func;
 };
 
 #endif // CORE_H

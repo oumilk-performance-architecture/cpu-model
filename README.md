@@ -1,4 +1,4 @@
-# ARM CPU Model
+# CPU Model (armv6m)
 
 ### Cycle accurate performance model 
 

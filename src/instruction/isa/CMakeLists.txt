@@ -1,7 +1,7 @@
 project(isa C CXX)
 
 
-set(SOURCE_FILES isa.h isa.cpp)
+set(SOURCE_FILES isa.cpp isa.h)
 add_library(isa SHARED STATIC ${SOURCE_FILES})
 
 target_link_libraries(${PROJECT_NAME} armv6m)
