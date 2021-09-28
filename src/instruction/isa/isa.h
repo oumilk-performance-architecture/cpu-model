@@ -8,7 +8,7 @@
 // Base Class
 class Isa {
     public:
-      virtual bool DecodeInstructions(uint16_t instr, UInstrPtr uop) = 0;
+      virtual bool DecodeInstructions(uint16_t instr, UInstrPtr uinstr) = 0; //, Uop uop) = 0;
     private:
 };
 

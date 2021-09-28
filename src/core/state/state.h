@@ -3,12 +3,12 @@
 
 #include <deque>
 #include <uinstr.h>
-#include <idata.h>
+//#include <idata.h>
 
 class State {
     public:
-        State();
         UInstrPtr NewInstruction(UInstr uop);
+        
         void ListInstructions();
         void DeleteOldest();
 

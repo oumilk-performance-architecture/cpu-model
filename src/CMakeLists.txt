@@ -24,6 +24,10 @@ add_subdirectory(instruction/isa)
 target_link_libraries(${PROJECT_NAME} isa)
 target_include_directories(${PROJECT_NAME} PRIVATE instruction/isa)
 
+add_subdirectory(instruction/portbind)
+target_link_libraries(${PROJECT_NAME} portbind)
+target_include_directories(${PROJECT_NAME} PRIVATE instruction/portbind)
+
 add_subdirectory(utils/parameter)
 target_link_libraries(${PROJECT_NAME} parameter)
 target_include_directories(${PROJECT_NAME} PRIVATE utils/parameter)

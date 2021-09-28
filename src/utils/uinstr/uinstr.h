@@ -7,11 +7,13 @@
 #include <uop.h>
 #include <iostream>
 
+// Forward Declare
+enum class ExecUnits;
+enum class ResUnits;
 /*
     Class: UInstr
     Responsible for storing information related to an instruction
 */
-
 enum class Apsr {
     n,
     z,
@@ -19,7 +21,6 @@ enum class Apsr {
     v
 };
 
-// TODO: Order matters here
 // NZCV
 enum class Cond{
     EQ = 0b0000, // Z = 1 (Equal)
@@ -47,28 +48,19 @@ class UInstr {
         void SetOpcode(Uop opcode);
         Uop GetOpcode();
 
-        void SetFlagNZ(bool value);
-        void SetFlagNZC(bool value);
-        void SetFlagNZCV(bool value);
-        void SetFlagN(bool value);
-        bool GetUpdateFlagN();
-        void SetFlagZ(bool value);
-        bool GetUpdateFlagZ();
-        void SetFlagC(bool value);
-        bool GetUpdateFlagC();
-        void SetFlagV(bool value);
-        bool GetUpdateFlagV();
-
+        // Register Information
         void SetRd(uint8_t rd);
-        uint8_t GetRd();
         void SetRn(uint8_t rn);
-        uint8_t GetRn();
         void SetRm(uint8_t rm);
-        uint8_t GetRm();
         void SetRa(uint8_t ra);
-        uint8_t GetRa();
         void SetRt(uint8_t ra);
-        uint8_t GetRt();
+        void SetAPSRUpdate(bool set_apsr);
+        inline uint8_t GetRd() { return rd_; };
+        inline uint8_t GetRn() { return rn_; };
+        inline uint8_t GetRm() { return rm_; };
+        inline uint8_t GetRa() { return ra_; };
+        inline uint8_t GetRt() { return rt_; };
+        inline bool    GetAPSRUpdate() { return set_apsr_; };
 
         void SetRegList(uint8_t reg_list);
         void SetImmed(uint32_t immed);
@@ -78,34 +70,41 @@ class UInstr {
 
         // Physical
         void SetPhysSrcA(int srca_phys);
-        int GetPhysSrcA();
         void SetPhysSrcB(int srcb_phys);
-        int GetPhysSrcB();
         void SetPhysDest(int dest_phys);
-        int GetPhysDest();
+        void SetPhysAPSR(int apsr_phys_);
+        inline int GetPhysSrcA() { return srca_data_; };
+        inline int GetPhysSrcB() { return srcb_data_; };
+        inline int GetPhysDest() { return dest_phys_; };
+        inline int GetPhysAPSR() { return apsr_phys_; };
 
         // Data
-        void      SetDataSrcA(uint32_t srca_data);
-        uint32_t  GetDataSrcA();
-        void      SetDataSrcB(uint32_t srcb_data);
-        uint32_t  GetDataSrcB();
-        void      SetDataDest(uint32_t dest_data);
-        uint32_t  GetDataDest();
+        void SetDataSrcA(uint32_t srca_data);
+        void SetDataSrcB(uint32_t srcb_data);
+        void SetDataDest(uint32_t dest_data);
         void SetDataFlagN(bool value);
-        bool GetDataFlagN();
         void SetDataFlagZ(bool value);
-        bool GetDataFlagZ();
         void SetDataFlagC(bool value);
-        bool GetDataFlagC();
         void SetDataFlagV(bool value);
-        bool GetDataFlagV();
+        inline uint32_t GetDataSrcA() { return srca_data_; };
+        inline uint32_t GetDataSrcB() { return srcb_data_; };
+        inline uint32_t GetDataDest() { return dest_data_; };
+        inline bool GetDataFlagN() { return apsr_data_.test((int)Apsr::n); };
+        inline bool GetDataFlagZ() { return apsr_data_.test((int)Apsr::z); };
+        inline bool GetDataFlagC() { return apsr_data_.test((int)Apsr::c); };
+        inline bool GetDataFlagV() { return apsr_data_.test((int)Apsr::v); };
 
         // Simulation
-        void SetExecUnit(uint8_t unit);
-        void SetLatency(uint8_t latency);
+        void SetExecUnit(std::vector<ExecUnits> unit);
+        void SetLatency(int latency);
+        void SetResUnit(std::vector<ResUnits> unit);
+        inline std::vector<ExecUnits> GetExecUnit() { return exec_units_; };
+        inline int GetLatency() { return latency_; };
+        inline std::vector<ResUnits> GetResUnit() { return res_units_; };
 
         // Support
         void PrintDetails();
+        void PrintExec();
         void PrintResults();
 
     private:
@@ -116,9 +115,9 @@ class UInstr {
         uint8_t rm_;
         uint8_t ra_;
         uint8_t rt_;
+        bool    set_apsr_;
         uint32_t immed_;
         std::bitset<8> reg_list_;
-        std::bitset<sizeof(Apsr)> set_apsr_;
         Cond cond_;
         // Physical
         int srca_phys_;
@@ -131,11 +130,13 @@ class UInstr {
         uint32_t dest_data_;
         std::bitset<sizeof(Apsr)> apsr_data_;
         // Simulation
-        uint8_t latency_;
-        std::vector<uint8_t> exec_units_;
+        int latency_;
+        std::vector<ExecUnits> exec_units_;
+        std::vector<ResUnits> res_units_;
 };
 
-using UInstrPtr = UInstr*;
+//using UInstrPtr = UInstr*;
+using UInstrPtr = std::shared_ptr<UInstr>;
 
 std::ostream & operator << (std::ostream &out, UInstr &c);
 std::ostream & operator << (std::ostream &out, UInstrPtr &c);

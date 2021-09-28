@@ -11,9 +11,6 @@
         - Fetch Information (Idata)
         - Instructions (UInstr)
 */
-State::State() {
-
-}
 
 void State::ListInstructions() {
     auto it = deque_instructions.begin();
@@ -23,13 +20,13 @@ void State::ListInstructions() {
     }
 }
 
-UInstrPtr State::NewInstruction(UInstr uop) {
-    deque_instructions.push_back(uop);
-    UInstrPtr ptr = &deque_instructions.back();
+//UInstrPtr State::NewInstruction(UInstr uop) {
+    //deque_instructions.push_back(uop);
+    //UInstrPtr ptr = std::make_shared<UInstr>(&deque_instructions.back());
 
-    return ptr;
+    //return ptr;
     //return dynamic_cast<UInstrPtr>(&deque_instructions.back());
-}
+//}
 
 void State::DeleteOldest() {
     deque_instructions.pop_front();

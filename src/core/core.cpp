@@ -3,23 +3,45 @@
 #include <vector>
 #include <iostream>
 #include <fetch.h>
-#include <armv6m.h>
+#include <decode.h>
+//#include <armv6m.h>
 #include <uinstr.h>
 #include <uop.h>
 #include <parameter.h>
 #include <delay.h>
 
-#include <state.h> // Temporary - should be in main.cpp?
+#include <state.h>
 #include <func.h> // For sure temporary...remove to exec unit
-Core::Core() {
-    fetch = new Fetch();
-    isa = new Armv6m();
-    func = new Func();
+#include <rename.h>
 
+Delay<bool>*          fetch_reset_done_rp   = new Delay<bool>("fetch_reset_done");
+
+Core::Core() {
+    cycle_ = 0;
+    reset_ = true;
+    //isa    = new Armv6m();
+    func   = new Func();
+    rename = new Rename();
 };
 
-void Core::Clock() {
-    uint16_t instr = 0b0000000010101010;
+void Core::Process(int cycle) {
+    cycle_ = cycle;
+
+    while (fetch_reset_done_rp->Receive(reset_,cycle)) {
+    }
+    
+    fetch.Process(cycle_, reset_);
+    decode.Process(cycle_, reset_);
+    allocate.Process(cycle_, reset_);
+}
+
+
+
+bool Core::Clock() {
+
+    // Check for machine done or stalled too long
+
+    /*uint16_t instr = 0b0000000010101010;
     UInstr temp;
     UInstrPtr tempptr1;
     UInstrPtr tempptr2;
@@ -37,33 +59,24 @@ void Core::Clock() {
     if (func->ExecuteUop(tempptr2)) {
         std::cout << "Execute successful\n";
     };
-    tempptr2->PrintResults();
+
+    int val;
+    bool cin, cout;
+    std::tie(val, cin, cout) = func->AddWithCary(1,2,true);
+    return false;*/
+
+    //Delay<int> fetch_to_itlb;
+    //int value;
+    //fetch_to_itlb.Send(2, 100);
+    //fetch_to_itlb.Send(3, 120);
+    //fetch_to_itlb.Send(4, 143);
+    //if (fetch_to_itlb.Receive(value, 120)) {
+    //    std::cout << "Found matching: " << (int)value << "\n";
+   // }
+    //fetch_to_itlb.displayAll();
 
 
-    /*Delay<UInstrPtr> fetch_to_itlb;
-    UInstrPtr value;
-    fetch_to_itlb.Send(tempptr1, 100);
-    fetch_to_itlb.Send(tempptr2, 120);
-    fetch_to_itlb.Send(tempptr3, 143);
-    if (fetch_to_itlb.Receive(value, 120)) {
-        std::cout << "Found matching: " << value << "\n";
-    }
-    fetch_to_itlb.displayAll();
-
-    tempptr1->SetImmed(300);
-    
-    fetch_to_itlb.displayAll(); */
-
-    /*parameter<int> num_knobs ("num_knobs", 3);
-    parameter<bool> out_of_order ("out_of_order", true);
-
-    if (num_knobs==3) {
-        std::cout << "Yay: this seems to be working\n";
-    }
-    if (out_of_order == true) {
-        std::cout << "we are out of order!\n";
-    }
-    std::cout << "num_knobs: " << num_knobs << "\n";*/
+    return false;
     // Test Msg
     /*Delay<UInstrPtr> fetch_to_itlb;
     UInstrPtr value = 10;
@@ -82,6 +95,6 @@ void Core::Clock() {
 
 
 Core::~Core() {
-    delete fetch;
+    //delete fetch;
 };
 

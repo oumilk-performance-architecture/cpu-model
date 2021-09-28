@@ -23,17 +23,23 @@ int main(int argc, const char *argv[]) {
   }
 
   // Load Program into Memory
-  bus->load_program(argv[1]);
-  bus->output_contents("./ou");
+  bus->Load_program(argv[1]);
+  bus->Output_contents("./ou");
 
-  // Testme
+  // Version
   cout << "Version " << arm_cpu_VERSION_MAJOR << "." << arm_cpu_VERSION_MINOR << "\n\n";
-  //cout << "Core Value: " << co->call_me() << "\n";
-  //cout << "Core Value: " << co->call_fetch() << "\n";
 
+  // Run CPU until Done
+  bool run = true;
+  int cycle = 0;
   while (true) {
-    core->Clock();
-    break;
+    core->Process(cycle);
+    bus->Process(cycle);
+    cycle++;
+
+    if (cycle > 15) {
+      break;
+    }
   }
   return 0;
 }

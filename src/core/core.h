@@ -1,23 +1,32 @@
 #ifndef CORE_H
 #define CORE_H
 
-#include "fetch/fetch.h"
-#include <armv6m.h>
+#include <fetch.h>
+#include <decode.h>
+#include <allocate.h>
+//#include <armv6m.h>
 #include <state.h>
 #include <func.h> // REMOVE
+#include <rename.h>
 
 class Core {
     public:
         Core();
         ~Core();
-        void Clock();
+        bool Clock();
         
+        void Process(int cycle);
     private:
-        int k;
-        Fetch *fetch;
-        Armv6m *isa;
-        State state;
+        int cycle_;
+        bool reset_;
+        State  state;
+        Fetch  fetch;
+        Decode decode;
+        Allocate allocate;
+        //Armv6m *isa;
+        
         Func *func;
+        Rename *rename;
 };
 
 #endif // CORE_H
