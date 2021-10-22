@@ -1,6 +1,7 @@
 #include <ProjectConfig.h>
 #include <core.h>
 #include <bus.h>
+#include <parameter.h>
 #include <iostream>
 
 // Temporary
@@ -21,6 +22,10 @@ int main(int argc, const char *argv[]) {
   if (argc < 2) {
     return 1;
   }
+  // Load Configs
+  //ParameterBase param;
+  //param.TempModifyOne("num_rob_entries");
+
 
   // Load Program into Memory
   bus->Load_program(argv[1]);

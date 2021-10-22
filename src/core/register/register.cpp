@@ -1,9 +1,10 @@
 #include "register.h"
-
-parameter<int> num_phys_reg ("num_phys_reg", 15);
+namespace param {
+    parameter<int> num_phys_reg ("num_phys_reg", 15);
+};
 
 Register::Register():
-    data(num_phys_reg) {
+    data(param::num_phys_reg) {
 }; 
 
 uint32_t Register::GetValue(int phys_reg) {

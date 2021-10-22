@@ -2,27 +2,31 @@
 #include <utility>
 #include <vector>
 #include <iostream>
-#include <fetch.h>
-#include <decode.h>
-//#include <armv6m.h>
-#include <uinstr.h>
-#include <uop.h>
 #include <parameter.h>
-#include <delay.h>
-
-#include <state.h>
-#include <func.h> // For sure temporary...remove to exec unit
+#include <allocate.h>
+#include <decode.h>
+#include <fetch.h>
 #include <rename.h>
+#include <execute.h>
+#include <rob.h>
 
 Delay<bool>*          fetch_reset_done_rp   = new Delay<bool>("fetch_reset_done");
 
 Core::Core() {
     cycle_ = 0;
     reset_ = true;
-    //isa    = new Armv6m();
-    func   = new Func();
-    rename = new Rename();
+
+    // Structures
+    rob_      = std::make_shared<Rob>();
+
+    // Processes
+    fetch_    = std::make_unique<Fetch>();
+    decode_   = std::make_unique<Decode>();
+    allocate_ = std::make_unique<Allocate>();
+    rename_   = std::make_unique<Rename>(rob_);
+    execute_  = std::make_unique<Execute>();
 };
+
 
 void Core::Process(int cycle) {
     cycle_ = cycle;
@@ -30,14 +34,16 @@ void Core::Process(int cycle) {
     while (fetch_reset_done_rp->Receive(reset_,cycle)) {
     }
     
-    fetch.Process(cycle_, reset_);
-    decode.Process(cycle_, reset_);
-    allocate.Process(cycle_, reset_);
+    fetch_->Process(cycle_, reset_);
+    decode_->Process(cycle_, reset_);
+    allocate_->Process(cycle_, reset_);
+    rename_->Process(cycle_, reset_);
+    execute_->Process(cycle_, reset_);
 }
 
 
 
-bool Core::Clock() {
+//bool Core::Clock() {
 
     // Check for machine done or stalled too long
 
@@ -76,7 +82,7 @@ bool Core::Clock() {
     //fetch_to_itlb.displayAll();
 
 
-    return false;
+//    return false;
     // Test Msg
     /*Delay<UInstrPtr> fetch_to_itlb;
     UInstrPtr value = 10;
@@ -91,10 +97,5 @@ bool Core::Clock() {
         std::cout << "Found matching: " << value << "\n";
     }
     fetch_to_itlb.displayAll();*/  
-}
-
-
-Core::~Core() {
-    //delete fetch;
-};
+//}
 

@@ -1,9 +1,8 @@
-project(rename C CXX)
+project(execute C CXX)
 
 set(SOURCE_FILES
-rename.h
-rename.cpp
-rat.h
+execute.h
+execute.cpp
 )
 
 add_library(${PROJECT_NAME} SHARED STATIC ${SOURCE_FILES})
@@ -20,8 +19,9 @@ target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/src/utils/
 target_link_libraries(${PROJECT_NAME} uinstr)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/src/utils/uinstr)
 
-target_link_libraries(${PROJECT_NAME} rob)
-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/src/core/rob)
+add_subdirectory(reservation)
+target_link_libraries(${PROJECT_NAME} reservation)
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/src/core/execute/reservation/reservation)
 
 #install(TARGETS fetch DESTINATION ${CPU_INSTALL_LIB_DIR})
 #install(FILES fetch.h DESTINATION ${CPU_INSTALL_INCLUDE_DIR})

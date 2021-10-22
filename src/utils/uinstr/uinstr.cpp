@@ -3,6 +3,14 @@
 
 UInstr::UInstr() {
     set_apsr_ = false;
+    // Max is "unasigned"
+    rd_ = std::numeric_limits<uint8_t>::max();
+    rn_ = std::numeric_limits<uint8_t>::max();
+    rm_ = std::numeric_limits<uint8_t>::max();
+    ra_ = std::numeric_limits<uint8_t>::max();
+    rt_ = std::numeric_limits<uint8_t>::max();
+    srca_phys_ = -1;
+    srcb_phys_ = -1;
 };
 
 // Logical
@@ -48,7 +56,7 @@ void UInstr::SetCond(uint8_t cond) {
     cond_ = static_cast<Cond>(cond);
 }
 void UInstr::SetCond(Cond cond) {
-    cond_ = static_cast<Cond>(cond);
+    cond_ = cond;//static_cast<Cond>(cond);
 }
 
 // Physical
@@ -105,9 +113,11 @@ void UInstr::PrintDetails() {
     std::cout << "Uop Detail: \n";
     std::cout << " Opcode: " << uop_str[(int)opcode_] << "\n";
     std::cout << " Latency: " << latency_ << "\n";
-    std::cout << " Rd: " << (int) rd_ << "  ";
+    std::cout << " Arch - Rd: " << (int) rd_ << "  ";
     std::cout << " Rn: " << (int) rn_ << "  ";
     std::cout << " Immed: " << (int) immed_ << "\n";
+    std::cout << " Phys - SrcA: " << (int) srca_phys_ << " ";
+    std::cout << " SrcB: " << (int) srcb_phys_ << "\n";
     PrintExec();
     std::cout << "\n";
 };

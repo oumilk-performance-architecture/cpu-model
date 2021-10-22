@@ -9,6 +9,8 @@
         DelayWrite       - Write class, specifies how many writes per cycle
         DelayRead        - Read class, specifies how many cycles before reading
 
+    Basically you create a Delay object and it will create a a Storage Interface object that is stored
+    in a static vector that is shared.  This vector is used to connect the WP/RP together
     @author Jonathan Ou
 */
 #include <utility>
@@ -54,6 +56,7 @@ class DelayBase {
 template <class T>
 class Delay : public DelayBase {
     public:
+        Delay();
         Delay (std::string name) {
             name_ = name;
             latency_ = 1;
@@ -67,15 +70,16 @@ class Delay : public DelayBase {
         void Send(T d, int c) {
             port_ptr->fifo.push_back(std::make_pair(d,c));
         }
-        /*bool IsReady(int c) {
-            auto TIsReady = [c](std::pair<T,int> curr) {
-                return curr.second == c;
+        bool IsReady(int c) {
+            auto TIsReady = [c, l=latency_](std::pair<T,int> curr) {
+                return curr.second + l <= c;
             };
-            if (std::find(fifo.begin(), fifo.end(), TIsReady())) {
+            auto msg = find_if(port_ptr->fifo.begin(), port_ptr->fifo.end(), TIsReady);
+            if (msg != port_ptr->fifo.end()) {
                 return true;
             }
             return false;
-        }*/
+        }
 
         bool Receive(T& d, int c) {
             auto msg = std::find_if(port_ptr->fifo.begin(), port_ptr->fifo.end(), [c, l=latency_](std::pair<T,int> curr) {
@@ -119,6 +123,9 @@ class Delay : public DelayBase {
         //std::vector<std::pair<T,int>> fifo;
         
 };
+
+template <class T>
+using DelayPtr = std::unique_ptr<Delay<T>>;
 
 #endif // DELAY_H
 

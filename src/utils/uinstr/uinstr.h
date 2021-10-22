@@ -7,6 +7,11 @@
 #include <uop.h>
 #include <iostream>
 
+/*
+  To Do:
+    1 - Parameterize reg name into a vector/array so it can be accessed with RegNames
+*/
+
 // Forward Declare
 enum class ExecUnits;
 enum class ResUnits;
@@ -21,6 +26,9 @@ enum class Apsr {
     v
 };
 
+enum class RegNames {
+    Rd, Rn, Rm, Ra, Rt
+};
 // NZCV
 enum class Cond{
     EQ = 0b0000, // Z = 1 (Equal)
@@ -49,17 +57,18 @@ class UInstr {
         Uop GetOpcode();
 
         // Register Information
-        void SetRd(uint8_t rd);
-        void SetRn(uint8_t rn);
-        void SetRm(uint8_t rm);
-        void SetRa(uint8_t ra);
+        void SetRd(uint8_t rd); // Destination
+        void SetRn(uint8_t rn); // Operand in arithmetic operation
+        void SetRm(uint8_t rm); // Operand in arithmetic operation
+        void SetRa(uint8_t ra); // value
         void SetRt(uint8_t ra);
-        void SetAPSRUpdate(bool set_apsr);
         inline uint8_t GetRd() { return rd_; };
         inline uint8_t GetRn() { return rn_; };
         inline uint8_t GetRm() { return rm_; };
         inline uint8_t GetRa() { return ra_; };
         inline uint8_t GetRt() { return rt_; };
+
+        void SetAPSRUpdate(bool set_apsr);
         inline bool    GetAPSRUpdate() { return set_apsr_; };
 
         void SetRegList(uint8_t reg_list);
@@ -110,7 +119,7 @@ class UInstr {
     private:
         // Logical
         Uop opcode_;
-        uint8_t rd_;
+        uint8_t rd_;    // Destination
         uint8_t rn_;
         uint8_t rm_;
         uint8_t ra_;

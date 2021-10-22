@@ -1,47 +1,34 @@
 #include "allocate.h"
-
-#include <delay.h>
-
-Delay<UInstrPtr>*     decode_to_alloc_rp = new Delay<UInstrPtr>("decode_to_alloc");
+#include <uinstr.h>
 
 Allocate::Allocate() {
+    decode_to_alloc_rp      = std::make_unique<Delay<UInstrPtr>>("decode_to_alloc");
+    allocate_to_portbind_wp = std::make_unique<Delay<UInstrPtr>>("allocate_to_portbind");
+    allocate_to_portbind_rp = std::make_unique<Delay<UInstrPtr>>("allocate_to_portbind");
+    pb_to_rename_wp         = std::make_unique<Delay<UInstrPtr>>("pb_to_rename");
     decode_to_alloc_rp->SetLatency(1);
+
+    portbind = std::make_unique<Portbind>();
 };
 
-void Allocate::StartAllocate() {
-    UInstrPtr uinstr = std::make_shared<UInstr>();
-    while (decode_to_alloc_rp->Receive(uinstr, cycle_)) {
-        std::cout << "Allocate: " << std::dec << cycle_ << "\n";
-        AllocateInfoPtr alloc_ptr = std::make_shared<AllocateInfo>(cycle_);
-        alloc_ptr->uinstr_ = uinstr;
-        alloc_ptr->uinstr_->PrintDetails();
-        alloc_ptr->ready_for_portbind_cycle_ = cycle_ + 1;
-        allocate_instr.push_back(alloc_ptr);
-    }
-}
-
 void Allocate::PortBind() {
-    UInstrPtr uinstr;
-    for (auto it = allocate_instr.cbegin(); it != allocate_instr.cend();) {
-        if ((*it)->ReadyForPortBind(cycle_)) {
-            std::cout << "Port Bind: " << std::dec << cycle_ << "\n";
-            uinstr = (*it)->uinstr_;
-            portbind.PortBindInstructions(uinstr);
-            (*it)->portbind_done_ = true;
-            (*it)->uinstr_->PrintDetails();
-        }
-        it++;
-    }
-}
-/*
-    Should have:
-        cracked
-        port_bound
-        memory_renamed
-*/
-void Allocate::FinishAllocate() {
+    // Any instructions decoded and ready?
+    while (decode_to_alloc_rp->IsReady(cycle_)) {
+        UInstrPtr uinstr;
+        // Check for Stalls
 
-}
+        // Port Bind Preference from Port Bind File
+        decode_to_alloc_rp->Receive(uinstr, cycle_);
+        //std::cout << "Allocate: " << std::dec << cycle_ << "\n";
+        portbind->PortBindInstructions(uinstr);
+        //uinstr->PrintDetails();
+
+        // Port Bind Logic
+
+        // Send to Next Stage
+        pb_to_rename_wp->Send(uinstr, cycle_);
+    }
+};
 
 void Allocate::Process(int cycle, bool reset) {
     cycle_ = cycle;
@@ -49,7 +36,5 @@ void Allocate::Process(int cycle, bool reset) {
     if (reset) {
         return;
     }
-    StartAllocate();
     PortBind();
-    FinishAllocate();
 }

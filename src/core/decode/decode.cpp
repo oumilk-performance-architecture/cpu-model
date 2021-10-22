@@ -2,7 +2,6 @@
 #include <armv6m.h>
 
 #include <delay.h>
-#include <state.h>
 
 
 Delay<uint32_t>*      raw_inst_to_decode_rp = new Delay<uint32_t>("raw_inst_to_decode");

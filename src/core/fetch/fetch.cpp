@@ -17,9 +17,9 @@ Fetch::Fetch() {
     nip_fetch_mem_wp   = new Delay<uint32_t>("nip_fetch_mem");
 };
 
-Fetch::~Fetch() {
-    delete nip_fetch_mem_wp;
-}
+//Fetch::~Fetch() {
+//    delete nip_fetch_mem_wp;
+//}
 
 void Fetch::Process(int cycle, bool reset) {
     cycle_ = cycle;

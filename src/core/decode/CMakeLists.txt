@@ -11,6 +11,3 @@ target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/src/instru
 
 target_link_libraries(${PROJECT_NAME} delay)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/src/utils/delay)
-
-target_link_libraries(${PROJECT_NAME} state)
-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/src/core/state)

@@ -11,7 +11,7 @@
 class Fetch {
     public:
         Fetch();
-        ~Fetch();
+        //~Fetch();
 
         void Process(int cycle, bool reset);
         uint32_t FetchMemory();
