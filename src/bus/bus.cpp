@@ -15,7 +15,7 @@ Bus::Bus(unsigned int sram_size, unsigned int srom_size):
     sram(sram_size * 1024, 0),
     code(srom_size * 1024, 0)
 {
-   nip_fetch_mem_rp->SetLatency(3);
+   nip_fetch_mem_rp->SetLatency(1);
 }
 
 Bus::~Bus() {
@@ -27,7 +27,7 @@ void Bus::Process(int cycle) {
 
     uint32_t pc;
     while (nip_fetch_mem_rp->Receive(pc, cycle_)) {
-        bus_return_info_wp->Send(Read16(pc), cycle_);
+        bus_return_info_wp->Send(Read32(pc), cycle_);
     }
 }
 

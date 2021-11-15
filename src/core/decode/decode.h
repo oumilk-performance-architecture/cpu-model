@@ -1,8 +1,13 @@
 #ifndef DECODE_H
 #define DECODE_H
 
-#include <armv6m.h>
+//#include <armv6m.h>
 #include <deque>
+
+class UInstr;
+class Decoder;
+class Rv32i;
+using UInstrPtr = std::shared_ptr<UInstr>;
 
 class DecodeInfo {
     public:
@@ -33,7 +38,7 @@ class Decode {
     private:
         std::deque<DecodeInfoPtr> decoding_instr;
         int cycle_;
-        Armv6m *isa;
+        Decoder *decoder;
 
 };
 

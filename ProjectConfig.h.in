@@ -1,3 +1,3 @@
 // the configured options and settings for Tutorial
-#define arm_cpu_VERSION_MAJOR @arm_cpu_VERSION_MAJOR@
-#define arm_cpu_VERSION_MINOR @arm_cpu_VERSION_MINOR@
+#define riscv_cpu_VERSION_MAJOR @riscv_cpu_VERSION_MAJOR@
+#define riscv_cpu_VERSION_MINOR @riscv_cpu_VERSION_MINOR@

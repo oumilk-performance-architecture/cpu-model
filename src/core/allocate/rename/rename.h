@@ -18,7 +18,10 @@ extern parameter<int> num_arch_reg;
 class Rename {
 
     public:
-        Rename(std::shared_ptr<Rob> rob);
+        Rename(std::shared_ptr<Rob> rob,
+               std::shared_ptr<RegisterAliasTable> rat,
+               std::shared_ptr<RegisterAliasTable> srat,
+               std::shared_ptr<FreeTable> free_table);
 
         void Process(int cycle, bool reset);
         void ClaimRob();
@@ -34,11 +37,10 @@ class Rename {
         DelayPtr<UInstrPtr> rename_to_reservation_wp;
         DelayPtr<UInstrPtr> allocate_rob_wp;
 
-        std::unique_ptr<RegisterAliasTable> rat_;
-        std::unique_ptr<RegisterAliasTable> srat_;
-        std::unique_ptr<FreeTable> free_table_;
+        std::shared_ptr<RegisterAliasTable> rat_;
+        std::shared_ptr<RegisterAliasTable> srat_;
+        std::shared_ptr<FreeTable> free_table_;
         std::shared_ptr<Rob> rob_;
-        std::deque<int>  free_list_;
         int cycle_;
 
         int ClaimPhysicalRegister(int arch_reg);

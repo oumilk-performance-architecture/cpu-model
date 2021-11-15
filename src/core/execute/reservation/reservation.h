@@ -12,15 +12,21 @@ class Reservation {
     public:
         Reservation(int size);
 
+        // Insertion Related
         bool CanInsert();
         int  NumFreeEntries();
         void Insert(UInstrPtr uinstr);
 
+        // Pick Related
         UInstrPtr PickOldest(int port);
         UInstrPtr PickSpecialCase(int port);
-        
+
+        // Reissue Related
         void RedoEntry(int entry);
+        
+        // Deallocation Related
         void DeallocEntry(int entry);
+        void SetDstReady();
 
         //struct ResTable {
         //    UInstrPtr uinstr;

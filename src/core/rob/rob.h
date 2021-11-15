@@ -2,6 +2,7 @@
 #define ROB_H
 
 #include <vector>
+#include "rat.h"
 #include <delay.h>
 
 class Rob {

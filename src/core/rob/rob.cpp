@@ -28,7 +28,6 @@ int Rob::Dispatch() {
     // Increment and allocate
     num_dispatched_++;
     table_[rob_tail_].finished = false;
-    std::cout << "\n  Dispatched - " << std::dec << num_dispatched_ << "\n";
     
     return IncrementPointer(rob_tail_);
 };

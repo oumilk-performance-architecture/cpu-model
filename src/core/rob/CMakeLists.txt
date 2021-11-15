@@ -3,6 +3,7 @@ project (rob C CXX)
 set (SOURCE_FILES
 rob.h
 rob.cpp
+rat.h
 )
 add_library(rob SHARED STATIC ${SOURCE_FILES})
 

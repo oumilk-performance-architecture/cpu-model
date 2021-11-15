@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.21)
 
-project(arm_cpu VERSION 0.1)
+project(riscv_cpu VERSION 0.1)
 configure_file(ProjectConfig.h.in ProjectConfig.h)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -18,6 +18,6 @@ include_directories(${CPU_INSTALL_INCLUDE_DIR})
 include_directories(${CPU_HEADERS_DIR})
 
 add_subdirectory(src)
-add_subdirectory(test)
+#add_subdirectory(test)
 
-target_include_directories(arm_cpu PUBLIC "${PROJECT_BINARY_DIR}")
+target_include_directories(riscv_cpu PUBLIC "${PROJECT_BINARY_DIR}")

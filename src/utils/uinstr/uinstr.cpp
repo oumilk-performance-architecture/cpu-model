@@ -1,14 +1,18 @@
 #include "uinstr.h"
 #include <iostream>
 
+/*enum class source_reg {
+    RN,
+    RM,
+    RA,
+    RT
+};*/
+
 UInstr::UInstr() {
-    set_apsr_ = false;
-    // Max is "unasigned"
-    rd_ = std::numeric_limits<uint8_t>::max();
-    rn_ = std::numeric_limits<uint8_t>::max();
-    rm_ = std::numeric_limits<uint8_t>::max();
-    ra_ = std::numeric_limits<uint8_t>::max();
-    rt_ = std::numeric_limits<uint8_t>::max();
+    // Max is "unassigned"
+    rd_  = std::numeric_limits<uint8_t>::max();
+    rs1_ = std::numeric_limits<uint8_t>::max();
+    rs2_ = std::numeric_limits<uint8_t>::max();
     srca_phys_ = -1;
     srcb_phys_ = -1;
 };
@@ -25,39 +29,18 @@ Uop UInstr::GetOpcode() {
 void UInstr::SetRd(uint8_t rd) {
     rd_ = rd;
 };
-void UInstr::SetRn(uint8_t rn) {
-    rn_ = rn;
+void UInstr::SetRs1(uint8_t rs1) {
+    rs1_ = rs1;
 };
-void UInstr::SetRm(uint8_t rm) {
-    rm_ = rm;
-};
-void UInstr::SetRa(uint8_t ra) {
-    ra_ = ra;
-};
-void UInstr::SetRt(uint8_t rt) {
-    rt_ = rt;
-};
-void UInstr::SetAPSRUpdate(bool set_apsr) {
-    set_apsr_ = set_apsr;
+void UInstr::SetRs2(uint8_t rs2) {
+    rs2_ = rs2;
 };
 
 
 // 
-void UInstr::SetRegList(uint8_t reg_list) {
-    reg_list_ = reg_list;
-};
 void UInstr::SetImmed(uint32_t immed) {
     immed_ = immed;
 };
-uint32_t UInstr::GetImmed() {
-    return immed_;
-};
-void UInstr::SetCond(uint8_t cond) {
-    cond_ = static_cast<Cond>(cond);
-}
-void UInstr::SetCond(Cond cond) {
-    cond_ = cond;//static_cast<Cond>(cond);
-}
 
 // Physical
 void UInstr::SetPhysSrcA(int srca_phys) {
@@ -69,9 +52,6 @@ void UInstr::SetPhysSrcB(int srcb_data) {
 void UInstr::SetPhysDest(int dest_phys) {
     dest_phys_ = dest_phys;
 };
-void UInstr::SetPhysAPSR(int apsr_phys) {
-    apsr_phys_ = apsr_phys;
-};
 
 // Data
 void UInstr::SetDataSrcA(uint32_t srca_data) {
@@ -82,18 +62,6 @@ void UInstr::SetDataSrcB(uint32_t srcb_data) {
 };
 void UInstr::SetDataDest(uint32_t dest_data) {
     dest_data_ = dest_data;
-};
-void UInstr::SetDataFlagN(bool value) {
-    apsr_data_.set((int)Apsr::n, value);
-};
-void UInstr::SetDataFlagZ(bool value) {
-    apsr_data_.set((int)Apsr::z, value);
-};
-void UInstr::SetDataFlagC(bool value) {
-    apsr_data_.set((int)Apsr::c, value);
-};
-void UInstr::SetDataFlagV(bool value) {
-    apsr_data_.set((int)Apsr::v, value);
 };
 
 
@@ -109,12 +77,14 @@ void UInstr::SetResUnit(std::vector<ResUnits> unit) {
 };
 
 // Support
+std::string UInstr::GetOpcodeString() {
+    return uop_str[(int)opcode_];
+}
 void UInstr::PrintDetails() {
     std::cout << "Uop Detail: \n";
     std::cout << " Opcode: " << uop_str[(int)opcode_] << "\n";
     std::cout << " Latency: " << latency_ << "\n";
     std::cout << " Arch - Rd: " << (int) rd_ << "  ";
-    std::cout << " Rn: " << (int) rn_ << "  ";
     std::cout << " Immed: " << (int) immed_ << "\n";
     std::cout << " Phys - SrcA: " << (int) srca_phys_ << " ";
     std::cout << " SrcB: " << (int) srcb_phys_ << "\n";
@@ -142,11 +112,6 @@ void UInstr::PrintResults() {
     std::cout << "  Source A: " << (int) srca_data_ << "  ";
     std::cout << "  Source B: " << (int) srcb_data_ << "\n";
     std::cout << "  Dest: " << (int) dest_data_ << "\n";
-    std::cout << " Flag:  ";
-    std::cout << "   n: " << (int) apsr_data_[(int)Apsr::n];
-    std::cout << "   z: " << (int) apsr_data_[(int)Apsr::z];
-    std::cout << "   c: " << (int) apsr_data_[(int)Apsr::c];
-    std::cout << "   v: " << (int) apsr_data_[(int)Apsr::v];
     std::cout << "\n";
 }
 
@@ -154,16 +119,6 @@ std::ostream & operator << (std::ostream &out, UInstr &c)
 {
     out << "UInstr Opcode: " << uop_str[(int)c.GetOpcode()] << "\n";
     out << "  Rd: " << (int)c.GetRd();
-    out << "  Rb: " << (int)c.GetRn();
     out << "  Immed: " << (int)c.GetImmed() << "\n";
-    return out;
-}
-
-std::ostream & operator << (std::ostream &out, UInstrPtr &c)
-{
-    out << "UInstrPtr Opcode: " << uop_str[(int)c->GetOpcode()] << "\n";
-    out << "  Rd: " << (int)c->GetRd();
-    out << "  Rb: " << (int)c->GetRn();
-    out << "  Immed: " << (int)c->GetImmed() << "\n";
     return out;
 }

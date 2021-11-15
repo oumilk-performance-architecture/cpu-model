@@ -23,7 +23,7 @@ void Reservation::Insert(UInstrPtr uinstr) {
     }
     table_.push_back(uinstr);
 };
-
+  
 UInstrPtr Reservation::PickOldest(int port) {
     auto oldest = [](UInstrPtr entry) {
         return;//entry->

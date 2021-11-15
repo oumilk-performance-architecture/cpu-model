@@ -1,7 +1,7 @@
 #include "decode.h"
-#include <armv6m.h>
-
+#include <decoder.h>
 #include <delay.h>
+#include <uinstr.h>
 
 
 Delay<uint32_t>*      raw_inst_to_decode_rp = new Delay<uint32_t>("raw_inst_to_decode");
@@ -9,7 +9,7 @@ Delay<UInstrPtr>*     decode_to_alloc_wp = new Delay<UInstrPtr>("decode_to_alloc
 
 
 Decode::Decode() {
-    isa = new Armv6m();
+    decoder = new Decoder();
     raw_inst_to_decode_rp->SetLatency(1);
 };
 
@@ -20,9 +20,7 @@ void Decode::StartDecode() {
     UInstrPtr uinstr = std::make_shared<UInstr>();
     DecodeInfoPtr decptr = std::make_shared<DecodeInfo>();
     while (raw_inst_to_decode_rp->Receive(raw_inst, cycle_)) {
-        std::cout << "Decode: " << std::hex << raw_inst << "\n";
-
-        if (isa->DecodeInstructions(raw_inst, uinstr)) {
+        if (decoder->DecodeInstruction(raw_inst, uinstr)) {
             decptr->ready_for_alloc_cycle_ = cycle_+2;
             decptr->uinstr_ = uinstr;
             decoding_instr.push_back(decptr);
@@ -38,7 +36,6 @@ void Decode::FinishDecode() {
     for (auto it = decoding_instr.cbegin(); it != decoding_instr.cend();) {
         if ((*it)->ReadyForAlloc(cycle_)) {
             UInstrPtr temp = (*it)->uinstr_;
-            std::cout << "Decode: " << std::dec << cycle_ << "\n";
             temp->PrintDetails();
             decode_to_alloc_wp->Send(temp, cycle_);
             it = decoding_instr.erase(it);

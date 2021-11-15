@@ -49,7 +49,7 @@ class Portbind {
         };
 
         std::vector<LatencyTable> latency_table_ = {
-            {Uop::ADR_lit,  1,   {ExecUnits::ALU1, ExecUnits::ALU2}, {}},
+            {Uop::LUI,  1,   {ExecUnits::ALU1, ExecUnits::ALU2}, {}},
         };
 
         std::vector<ResUnits> GetResUnits(std::vector<ExecUnits>);

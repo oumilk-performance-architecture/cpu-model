@@ -7,6 +7,9 @@ execute.cpp
 
 add_library(${PROJECT_NAME} SHARED STATIC ${SOURCE_FILES})
 
+target_link_libraries(${PROJECT_NAME} common)
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/src/utils/common)
+
 target_link_libraries(${PROJECT_NAME} parameter)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/src/utils/parameter)
 

@@ -2,27 +2,43 @@
 #define UOP_H
 
 enum class Uop {
-    /* */
-    LSL_imm, LSL_reg, 
-    /* Move */
-    MOVS_imm, MOV_reg, MOVS_reg,
-    /* Add */
-    ADDS_imm, ADDS_reg, ADD_reg,
-    ADD_SP_imm_t1, ADD_SP_imm_t2, ADD_SP_reg_t1, ADD_SP_reg_t2,
-    ADR_imm, ADCS, ADD_PC_reg,
-    /* ADR */
-    ADR_lit
+    /*
+        RV32I
+    */
+    /* U Type - Long immediates */
+    LUI, AUIPC,
+    /* I Type - Short immediates and loads */
+    LB, LH, LW, LBU, LHU, JALR, ECALL, 
+    ADDI, SLTI, SLTIU, XORI, ORI, ANDI,
+    SLLI, SRLI, SRAI,
+    /* B Type - Branches */
+    BEQ, BNE, BLT, BGE, BLTU, BGEU,
+    /* J Type - Unconditional Jumps */
+    JAL,
+    /* R Type - Register to Register Operation */
+    ADD, SUB, SLL, SLT, SLTU, XOR, SRL, SRA, OR, AND,
+    /* S Type - Stores */
+    SB, SH, SW
 };
 
 static const char *uop_str[] = {
-    "LSL_imm", "LSL_reg",
-    "MOVS_imm", "MOV_reg", "MOVS_reg",
-    /* Add */
-    "ADDS_imm", "ADDS_reg", "ADD_reg",
-    "ADD_SP_imm_t1", "ADD_SP_imm_t2", "ADD_SP_reg_t1", "ADD_SP_reg_t2",
-    "ADR_imm", "ADCS", "ADD_PC_reg",
-    /* ADR */
-    "ADR_lit"
+    /*
+        RV32I
+    */
+    /* U Type - Long immediates */
+    "LUI", "AUIPC",
+    /* I Type - Short immediates and loads */
+    "LB", "LH", "LW", "LBU", "LHU", "JALR", "ECALL",
+    "ADDI", "SLTI", "SLTIU", "XORI", "ORI", "ANDI",
+    "SLLI", "SRLI", "SRAI",
+    /* B Type - Branches */
+    "BEQ", "BNE", "BLT", "BGE", "BLTU", "BGEU",
+    /* J Type - Unconditional Jumps */
+    "JAL",
+    /* R Type - Register to Register Operation */
+    "ADD", "SUB", "SLL", "SLT", "SLTU", "XOR", "SRL", "SRA", "OR", "AND",
+    /* S Type - Stores */
+    "SB", "SH", "SW"
 };
 
 #endif // UOP_H

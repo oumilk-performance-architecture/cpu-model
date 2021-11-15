@@ -1,6 +1,7 @@
 #ifndef RAT_H
 #define RAT_H
 
+#include <deque>
 #include <vector>
 
 class FreeTable {

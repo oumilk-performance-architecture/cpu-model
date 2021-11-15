@@ -32,7 +32,7 @@ int main(int argc, const char *argv[]) {
   bus->Output_contents("./ou");
 
   // Version
-  cout << "Version " << arm_cpu_VERSION_MAJOR << "." << arm_cpu_VERSION_MINOR << "\n\n";
+  cout << "Version " << riscv_cpu_VERSION_MAJOR << "." << riscv_cpu_VERSION_MINOR << "\n\n";
 
   // Run CPU until Done
   bool run = true;
@@ -42,7 +42,7 @@ int main(int argc, const char *argv[]) {
     bus->Process(cycle);
     cycle++;
 
-    if (cycle > 15) {
+    if (cycle > 10) {
       break;
     }
   }

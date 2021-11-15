@@ -1,8 +1,12 @@
-project(arm_cpu)
+project(riscv_cpu)
 
 set(SOURCE_FILES main.cpp main.h)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
+
+add_subdirectory(utils/common)
+target_link_libraries(${PROJECT_NAME} common)
+target_include_directories(${PROJECT_NAME} PRIVATE utils/common)
 
 add_subdirectory(utils/uop)
 target_link_libraries(${PROJECT_NAME} uop)
@@ -21,7 +25,7 @@ target_link_libraries(${PROJECT_NAME} func)
 target_include_directories(${PROJECT_NAME} PRIVATE instruction/func)
 
 add_subdirectory(instruction/isa)
-target_link_libraries(${PROJECT_NAME} isa)
+target_link_libraries(${PROJECT_NAME} decoder)
 target_include_directories(${PROJECT_NAME} PRIVATE instruction/isa)
 
 add_subdirectory(instruction/portbind)
@@ -44,5 +48,5 @@ add_subdirectory(core)
 target_link_libraries(${PROJECT_NAME} core)
 target_include_directories(${PROJECT_NAME} PRIVATE core)
 
-install(TARGETS arm_cpu DESTINATION ${CPU_INSTALL_BIN_DIR})
+install(TARGETS riscv_cpu DESTINATION ${CPU_INSTALL_BIN_DIR})
 #install(FILES main.h DESTINATION ${CPU_INSTALL_INCLUDE_DIR})
