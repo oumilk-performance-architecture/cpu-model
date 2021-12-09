@@ -20,8 +20,17 @@ class Func {
             Uop uop;
             exec exec;
         };
+
+        struct {signed int x:12;} sign_11;
+        struct {signed int x:21;} sign_20;
+        struct {signed int x:32;} sign_31;
     private:
-        void ExecAdd(UInstrPtr uinstr);
+        void ExecLui(UInstrPtr uinstr);
+        void ExecAuipc(UInstrPtr uinstr);
+        void ExecAddi(UInstrPtr uinstr);
+        void ExecSlti(UInstrPtr uinstr);
+        void ExecSltiu(UInstrPtr uinstr);
+        void ExecXori(UInstrPtr uinstr);
 
         template <class T>
         T ExecSub(T rs1_data, T rs2_data) {
@@ -43,7 +52,8 @@ class Func {
         
 
         std::vector<ExecuteTable> exec_table = {
-            {Uop::ADD,    &Func::ExecAdd },
+            {Uop::LUI,    &Func::ExecLui},
+            //{Uop::ADD,    &Func::ExecAdd },
             /*{Uop::MOVS_imm,      &Func::ExecMovImm},
             {Uop::MOV_reg,       &Func::ExecMovReg},
             {Uop::MOVS_reg,      &Func::ExecMovReg},

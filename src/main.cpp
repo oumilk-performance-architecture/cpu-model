@@ -42,7 +42,7 @@ int main(int argc, const char *argv[]) {
     bus->Process(cycle);
     cycle++;
 
-    if (cycle > 10) {
+    if (cycle > 11) {
       break;
     }
   }

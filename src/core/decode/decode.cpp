@@ -36,7 +36,6 @@ void Decode::FinishDecode() {
     for (auto it = decoding_instr.cbegin(); it != decoding_instr.cend();) {
         if ((*it)->ReadyForAlloc(cycle_)) {
             UInstrPtr temp = (*it)->uinstr_;
-            temp->PrintDetails();
             decode_to_alloc_wp->Send(temp, cycle_);
             it = decoding_instr.erase(it);
         } else {

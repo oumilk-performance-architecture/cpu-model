@@ -7,6 +7,9 @@ portbind.cpp
 
 add_library(portbind SHARED STATIC ${SOURCE_FILES})
 
+target_link_libraries(${PROJECT_NAME} common)
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/src/utils/common)
+
 target_link_libraries(${PROJECT_NAME} uinstr)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/src/utils/uinstr)
 

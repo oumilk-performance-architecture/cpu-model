@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.2)
-project(arm_tests)
+project(riscv_tests)
 
 add_subdirectory(lib/googletest)
 

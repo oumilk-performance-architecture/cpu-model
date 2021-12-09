@@ -3,28 +3,45 @@
 
 #include <vector>
 #include <map>
-#include <uinstr.h>
 #include <uop.h>
+#include <common.h>
+#include <string>
 
-enum class ResUnits {
-    INT1,
-    INT2,
+class UInstr;
+using UInstrPtr = std::shared_ptr<UInstr>;
+
+/*
+    Class: Portbind
+    Description: The class contains information on the schedulers, ports, and execution units.  Child classes 
+                 should be created for different "projects"
+
+    ReservationUnits - All possible schedulers
+    ExecUnits        - All possible exec units
+    res_table_       - Ties the exec units to the scheduler/ports
+    latency_table_   - UINSTRS are tied to exec units allowed and reservation stations.
+*/
+
+enum class SchedulerUnits {
+    AGU0,
+    INT0,
+    INT1
 };
 
-static const char *resunits_str[] = {
-    "INT1",
-    "INT2",
+static const enum_array<SchedulerUnits, std::string, 3> schedulerUnits_str = {
+    "AGU0",
+    "INT0",
+    "INT1"
 };
 
 enum class ExecUnits {
-    ALU1,
-    ALU2,
+    AGU0,
+    ALU0,
     MUL1
 };
 
-static const char *execunits_str[] = {
-    "ALU1",
-    "ALU2",
+static const enum_array<ExecUnits, std::string, 3> execunits_str = {
+    "AGU0",
+    "ALU0",
     "MUL1"
 };
 
@@ -32,27 +49,26 @@ class Portbind {
     public:
         Portbind();
 
-        void PortBindInstructions(UInstrPtr uinstr);
+        void GetPortInformation(UInstrPtr uinstr);
+        //virtual SchedulerUnits GetScheduler(UInstrPtr uinstr);
 
         struct LatencyTable {
             Uop uop;
             int latency;
             std::vector<ExecUnits> exec_units;
-            std::vector<ResUnits>  res_units;
+            std::vector<SchedulerUnits>  res_units;
         };
 
     private:
-        std::map<ExecUnits, ResUnits> res_table_ = {
-            {ExecUnits::ALU1, ResUnits::INT1},
-            {ExecUnits::ALU2, ResUnits::INT2},
-            {ExecUnits::MUL1, ResUnits::INT2},
+        std::map<ExecUnits, SchedulerUnits> sched_table_ = {
+            {ExecUnits::AGU0, SchedulerUnits::AGU0},
         };
 
         std::vector<LatencyTable> latency_table_ = {
-            {Uop::LUI,  1,   {ExecUnits::ALU1, ExecUnits::ALU2}, {}},
+            {Uop::LUI,  1,   {ExecUnits::AGU0}, {}},
         };
 
-        std::vector<ResUnits> GetResUnits(std::vector<ExecUnits>);
+        std::vector<SchedulerUnits> GetResUnits(std::vector<ExecUnits>);
 };
 
 #endif // PORTBIND_H

@@ -1,8 +1,8 @@
-project(reservation C CXX)
+project(scheduler C CXX)
 
 set(SOURCE_FILES
-reservation.h
-reservation.cpp
+scheduler.h
+scheduler.cpp
 )
 
 add_library(${PROJECT_NAME} SHARED STATIC ${SOURCE_FILES})

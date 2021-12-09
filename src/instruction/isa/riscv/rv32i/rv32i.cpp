@@ -9,7 +9,7 @@ Rv32i::Rv32i() {
 //    throw "Invalid instruction size fo RV32I\n";
 //}
 
-bool Rv32i::DecodeInstructions(uint32_t instr, UInstrPtr uinstr) {//, Uop uop) {
+bool Rv32i::doDecodeInstructions(uint32_t instr, UInstrPtr uinstr) {//, Uop uop) {
     std::vector<Decoder32BTable>::iterator iter;
     auto decodeInstr = [&instr](const Decoder32BTable opcode) {
         return (instr & opcode.mask) == opcode.match; 

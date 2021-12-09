@@ -10,8 +10,10 @@ using UInstrPtr = std::shared_ptr<UInstr>;
 // Base Class
 class Isa {
     public:
-        virtual bool DecodeInstructions(uint32_t instr, UInstrPtr uinstr) = 0;
-
+        // NVI
+        bool DecodeInstructions(uint32_t instr, UInstrPtr uinstr) {
+            return doDecodeInstructions(instr, uinstr);
+        };
 
     // 32 Bit
     constexpr uint32_t Mask32(int hi, int lo) {
@@ -52,7 +54,7 @@ class Isa {
     // Data Mask
     template <class T>
     constexpr T DataMask (T instr_data, int hi, int lo) {
-        return (instr_data & (T) Mask(hi,lo)) >> lo;
+        return (instr_data & (T) BitMask(hi,lo)) >> lo;
     };
     template <class T>
     constexpr T Mask11to7 (T instr_data) {
@@ -80,6 +82,7 @@ class Isa {
     };
 
     private:
+        virtual bool doDecodeInstructions(uint32_t instr, UInstrPtr uinstr) = 0;
 };
 using IsaBase = Isa;
 

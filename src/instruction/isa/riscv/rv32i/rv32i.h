@@ -12,7 +12,6 @@ class Rv32i : public IsaBase {
     public:
         Rv32i();
         //bool DecodeInstructions(uint16_t instr, UInstrPtr uinstr);
-        bool DecodeInstructions(uint32_t instr, UInstrPtr uinstr);
 
         typedef void (Rv32i::*decode)(uint32_t instr, UInstrPtr uop);
         struct Decoder32BTable {
@@ -23,6 +22,7 @@ class Rv32i : public IsaBase {
         };
 
     private:
+        bool doDecodeInstructions(uint32_t instr, UInstrPtr uinstr);
         /* U Type - Long immediates */
         void DecodeU (uint32_t instr, UInstrPtr uinstr);
         /* I Type - Short immediates and loads */

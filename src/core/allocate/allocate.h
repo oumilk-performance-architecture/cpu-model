@@ -3,16 +3,17 @@
 
 #include <utility>
 #include <deque>
-
-#include <portbind.h>
+#include <map>
 #include <delay.h>
 #include <common.h>
+#include <string>
 
 class UInstr;
 using UInstrPtr = std::shared_ptr<UInstr>;
 class FreeTable;
 class RegisterAliasTable;
 class Rob;
+class Portbind;
 
 /*
     Class: Allocate
@@ -89,7 +90,7 @@ class Allocate {
 
         DelayPtr<UInstrPtr> decode_to_alloc_rp;
         DelayPtr<UInstrPtr> alloc_to_exec_wp;
-        std::unique_ptr<Portbind> portbind;
+        std::shared_ptr<Portbind> portbind;
         int cycle_;
         std::shared_ptr<Rob>                rob_;
         std::shared_ptr<RegisterAliasTable> rat_;

@@ -2,6 +2,7 @@
 #include <rat.h>
 #include <parameter.h>
 #include <uinstr.h>
+#include <portbind.h>
 
 namespace param {
     parameter<bool>       enable_renaming ("enable_renaming", false);
@@ -25,7 +26,7 @@ Allocate::Allocate( std::shared_ptr<Rob> rob,
     alloc_to_exec_wp        = std::make_unique<Delay<UInstrPtr>>("alloc_to_exec");
     decode_to_alloc_rp->SetLatency(1);
 
-    portbind = std::make_unique<Portbind>();
+    portbind = std::make_shared<Portbind>();
 
     // Create Pipestages
     allocate_stage_.push_back(AllocPipeStage::Allocation);
@@ -60,7 +61,6 @@ void Allocate::Allocation() {
         AllocateInfoPtr allocateInfo = std::make_shared<AllocateInfo>(cycle_, uinstr);
         FinishStage(allocateInfo, 0);
         allocate_queue_.push_back(allocateInfo);
-        std::cout << "Queue Size: " << allocate_queue_.size() << "\n";
     }
 };
 
@@ -78,7 +78,12 @@ void Allocate::PortBind() {
             std::cout << "  Uop: " << allocateInfo->uinstr_->GetOpcodeString() << "\n";
             std::cout << "\n";
             UInstrPtr uinstr = allocateInfo->uinstr_;
-            portbind->PortBindInstructions(uinstr);
+            portbind->GetPortInformation(uinstr);
+
+            // Assign exec/sched - right now just pick the first...
+            uinstr->SetAssignedSched(uinstr->GetSchedUnit()[0]);
+            uinstr->SetAssignedExec(uinstr->GetExecUnit()[0]);
+
             FinishStage(allocateInfo, 1);
         }
     }
@@ -102,6 +107,7 @@ void Allocate::Dispatch() {
             UInstrPtr uinstr = allocateInfo->uinstr_;
             alloc_to_exec_wp->Send(uinstr, cycle_);
             allocate_queue_.pop_front();
+            //uinstr->PrintDetails();
         } else {
             return;
         }
@@ -155,5 +161,5 @@ void Allocate::Process(int cycle, bool reset) {
     Dispatch();
 
     // Debug
-    PrintAllocateUops();
+    //PrintAllocateUops();
 }

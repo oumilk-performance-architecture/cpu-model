@@ -1,14 +1,15 @@
 #include "portbind.h"
+#include <uinstr.h>
 
 Portbind::Portbind() {
 };
 
-std::vector<ResUnits> Portbind::GetResUnits(std::vector<ExecUnits> exec_units) {
-    std::vector<ResUnits> temp;
+std::vector<SchedulerUnits> Portbind::GetResUnits(std::vector<ExecUnits> exec_units) {
+    std::vector<SchedulerUnits> temp;
 
     for (auto it = exec_units.begin(); it != exec_units.end(); it++) {
-        auto search = res_table_.find((*it));
-        if (search != res_table_.end()) {
+        auto search = sched_table_.find((*it));
+        if (search != sched_table_.end()) {
             temp.push_back(search->second);
         }
     }
@@ -19,7 +20,10 @@ std::vector<ResUnits> Portbind::GetResUnits(std::vector<ExecUnits> exec_units) {
     return temp;
 };
 
-void Portbind::PortBindInstructions(UInstrPtr uinstr) {
+/*
+    Gets the valid exec/sched units for UInstr
+*/
+void Portbind::GetPortInformation(UInstrPtr uinstr) {
     std::vector<LatencyTable>::iterator iter;
     // Set Latency and Exec
     auto getExecUnit = [&uinstr](const LatencyTable lat_table) {
@@ -32,6 +36,6 @@ void Portbind::PortBindInstructions(UInstrPtr uinstr) {
         if (iter->res_units.size() < 1) {
             iter->res_units = GetResUnits(uinstr->GetExecUnit());
         }
-        uinstr->SetResUnit(iter->res_units);
+        uinstr->SetSchedUnit(iter->res_units);
     };
 }

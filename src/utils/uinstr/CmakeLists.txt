@@ -6,5 +6,8 @@ add_library(${PROJECT_NAME} SHARED STATIC ${SOURCE_FILES})
 target_link_libraries(${PROJECT_NAME} uop)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/src/utils/uop)
 
+target_link_libraries(${PROJECT_NAME} portbind)
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/src/instruction/portbind)
+
 #install(TARGETS uinstr DESTINATION ${CPU_INSTALL_LIB_DIR})
 #install(FILES uinstr.h DESTINATION ${CPU_INSTALL_INCLUDE_DIR})

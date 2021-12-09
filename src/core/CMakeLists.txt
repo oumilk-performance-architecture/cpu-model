@@ -41,8 +41,6 @@ target_link_libraries(${PROJECT_NAME} decoder)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/src/instruction/isa)
 
 # REMOVE ME - JOU
-target_link_libraries(${PROJECT_NAME} func)
-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/src/instruction/func)
 
 target_link_libraries(${PROJECT_NAME} parameter)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/src/utils/parameter)

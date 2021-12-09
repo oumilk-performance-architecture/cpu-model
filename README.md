@@ -1,4 +1,4 @@
-# CPU Model (armv6m)
+# CPU Model (RISC-V)
 
 ### Cycle accurate performance model 
 
@@ -28,6 +28,7 @@ Open sourced under MIT license, the terms of which can be read here — [MIT Lic
 ### Acknowledgments
  * [CMake C++ Project Template](https://github.com/kigster/cmake-project-template) - Initial project started from template
  * [USIM](https://github.com/bravegnu/usim) - Cortex-M0 simulator written in C++
+ * [Thumbulator](https://github.com/dwelch67/thumbulator) - ARM Thumb Simulator
 
 
 
@@ -39,19 +40,6 @@ Open sourced under MIT license, the terms of which can be read here — [MIT Lic
 
 
 ##############################################################
-# CMake C++ Project Template
-
-### Division with a remainder library
-
-Thank you for your interest in this project!
-
-Are you just starting with `CMake` or C++?
-
-Do you need some easy-to-use starting point, but one that has the basic moving parts you are likely going to need on any medium sized project?
-
-Do you believe in test-driven development, or at the very lest — write your tests *together* with the feature code? If so you'd want to start your project pre-integrated with a good testing framework.
-
-Divider is a minimal project that's kept deliberately very small. When you build it using CMake/make (see below) it generates:
 
  1. A tiny **static library** `lib/libdivision.a`,
  2. **A command line binary `bin/divider`**, which links with the library,
@@ -166,19 +154,3 @@ Tests:
  * For every C++ file in `src/A/B/<name>.cpp` there is a corresponding test file `test/A/B/<name>_test.cpp`
  * Tests compile into a single binary `test/bin/runner` that is run on a command line to run the tests.
  * `test/lib` folder with a git submodule in `test/lib/googletest`, and possibly other libraries.
-
-#### Contributing
-
-**Pull Requests are WELCOME!** Please submit any fixes or improvements, and I promise to review it as soon as I can at the project URL:
-
- * [Project Github Home](https://github.com/kigster/cmake-project-template)
- * [Submit Issues](https://github.com/kigster/cmake-project-template/issues)
- * [Pull Requests](https://github.com/kigster/cmake-project-template/pulls)
-
-
-
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fkigster%2Fcmake-project-template.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fkigster%2Fcmake-project-template?ref=badge_large)
-
-### Acknowledgements
-
-This project is a derivative of the [CMake Tutorial](https://cmake.org/cmake-tutorial/), and is aimed at saving time for starting new projects in C++ that use CMake and GoogleTest.
